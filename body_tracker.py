@@ -3,6 +3,7 @@
 
 import cv2
 import mediapipe as mp
+import numpy as np
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python.vision.core.vision_task_running_mode import VisionTaskRunningMode
@@ -61,9 +62,14 @@ class BodyTracker:
 
     def track_body(self):
         ret, img = self.__cap.read()
+        if not ret:
+            return None
+
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=imgRGB)
 
         self.__detector.detect_async(image=mp_image, timestamp_ms=self.timestamp)
         self.timestamp+=1
+
+        return imgRGB
