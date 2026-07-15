@@ -27,11 +27,11 @@ class BodyTracker:
         self.__detector = self.create_detector()
         self.__cap = cv2.VideoCapture(0)
 
-        self.__timestamp = 0
+        self.timestamp = 0
         self.landmarks = None
 
     def create_detector(self):
-        base_options = python.BaseOptions(model_asset_path='../pose_landmarker_heavy.task')
+        base_options = python.BaseOptions(model_asset_path='pose_landmarker_heavy.task')
         options = vision.PoseLandmarkerOptions(
             base_options=base_options,
             output_segmentation_masks=True,
@@ -65,5 +65,5 @@ class BodyTracker:
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=imgRGB)
 
-        self.__detector.detect_async(image=mp_image, timestamp_ms=self.__timestamp)
-        self.__timestamp+=1
+        self.__detector.detect_async(image=mp_image, timestamp_ms=self.timestamp)
+        self.timestamp+=1
