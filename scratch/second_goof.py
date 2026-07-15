@@ -54,7 +54,7 @@ with vision.PoseLandmarker.create_from_options(options) as detector:
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=imgRGB)
-        detector.detect_async(mp_image, i)
+        detector.detect_async(image=mp_image, timestamp_ms=i)
         print(i)
 
 
